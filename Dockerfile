@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
 RUN apt-get -y update && \
     apt-get install -yq apt-transport-https \
@@ -31,24 +31,11 @@ RUN apt-get -y update && \
     subversion
 RUN git clone --recursive https://github.com/ONLYOFFICE/DesktopEditors.git
 RUN cd DesktopEditors && \
+    git submodule foreach --recursive git checkout develop
+RUN cd DesktopEditors && \
     cd core/Common/3dParty && \
     ./make.sh
-# RUN cd DesktopEditors/core/Common/3dParty/boost && \
-#     bash fetch.sh && \
-#     bash build.sh
-# RUN cd DesktopEditors/core/Common/3dParty/cef && \
-#     bash fetch.sh && \
-#     bash build.sh
-# RUN cd DesktopEditors/core/Common/3dParty/curl && \
-#     bash fetch.sh
-# RUN cd DesktopEditors/core/Common/3dParty/icu && \
-#     bash fetch.sh && \
-#     bash build.sh
-# RUN cd DesktopEditors/core/Common/3dParty/openssl && \
-#     bash fetch.sh && \
-#     bash build.sh
-# RUN cd DesktopEditors/core/Common/3dParty/v8 && \
-#     bash fetch.sh
-# RUN cd DesktopEditors/core/Common/3dParty/v8 && \
-#     bash build.sh    
-
+RUN cd DesktopEditors/core && \
+    make
+RUN cd DesktopEditors/sdkjs && \
+    make
