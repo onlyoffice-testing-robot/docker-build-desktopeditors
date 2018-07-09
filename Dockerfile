@@ -49,3 +49,6 @@ RUN cd DesktopEditors && \
     cp -r core/Common/3dParty/cef/linux_64/build/* core/build/cef/linux && \
     mkdir -pv core/Common/3dParty/cef/linux && \
     cp -r core/Common/3dParty/cef/linux_64/build/* core/Common/3dParty/cef/linux
+RUN cd DesktopEditors && \
+    cd desktop-sdk/ChromiumBasedEditors/lib && \
+    qmake AscDocumentsCore_linux.pro    
