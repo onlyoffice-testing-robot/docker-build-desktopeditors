@@ -39,3 +39,8 @@ RUN cd DesktopEditors/core && \
     make
 RUN cd DesktopEditors/sdkjs && \
     make
+# Same workaround as https://github.com/npm/npm/issues/15558 for npm install
+RUN cd DesktopEditors/sdkjs && \
+    rm -rf build/node_modules && \ 
+    npm install findup-sync resolve nopt grunt-known-options -g && \ 
+    bash build/build-desktop.sh
