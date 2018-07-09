@@ -44,3 +44,8 @@ RUN cd DesktopEditors/sdkjs && \
     rm -rf build/node_modules && \ 
     npm install findup-sync resolve nopt grunt-known-options -g && \ 
     bash build/build-desktop.sh
+RUN cd DesktopEditors && \
+    mkdir -pv core/build/cef/linux && \
+    cp -r core/Common/3dParty/cef/linux_64/build/* core/build/cef/linux && \
+    mkdir -pv core/Common/3dParty/cef/linux && \
+    cp -r core/Common/3dParty/cef/linux_64/build/* core/Common/3dParty/cef/linux
