@@ -52,3 +52,7 @@ RUN cd DesktopEditors && \
 RUN cd DesktopEditors && \
     cd desktop-sdk/ChromiumBasedEditors/lib && \
     qmake AscDocumentsCore_linux.pro    
+RUN apt-get install -y libqt5x11extras5-dev libqt5svg5-dev && \
+    cd DesktopEditors && \
+    cd desktop-apps/win-linux && \
+    qmake ASCDocumentEditor.pro
