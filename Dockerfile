@@ -30,29 +30,25 @@ RUN apt-get -y update && \
     git \
     subversion
 RUN git clone --recursive https://github.com/ONLYOFFICE/DesktopEditors.git
-RUN cd DesktopEditors && \
-    git submodule foreach --recursive git checkout develop
-RUN cd DesktopEditors && \
-    cd core/Common/3dParty && \
+WORKDIR DesktopEditors
+RUN git submodule foreach --recursive git checkout develop
+RUN cd core/Common/3dParty && \
     ./make.sh
-RUN cd DesktopEditors/core && \
+RUN cd core && \
     make
-RUN cd DesktopEditors/sdkjs && \
+RUN cd sdkjs && \
     make
 # Same workaround as https://github.com/npm/npm/issues/15558 for npm install
-RUN cd DesktopEditors/sdkjs && \
+RUN cd sdkjs && \
     rm -rf build/node_modules && \ 
     npm install findup-sync resolve nopt grunt-known-options -g && \ 
     bash build/build-desktop.sh
-RUN cd DesktopEditors && \
-    mkdir -pv core/build/cef/linux && \
+RUN mkdir -pv core/build/cef/linux && \
     cp -r core/Common/3dParty/cef/linux_64/build/* core/build/cef/linux && \
     mkdir -pv core/Common/3dParty/cef/linux && \
     cp -r core/Common/3dParty/cef/linux_64/build/* core/Common/3dParty/cef/linux
-RUN cd DesktopEditors && \
-    cd desktop-sdk/ChromiumBasedEditors/lib && \
+RUN cd desktop-sdk/ChromiumBasedEditors/lib && \
     qmake AscDocumentsCore_linux.pro    
 RUN apt-get install -y libqt5x11extras5-dev libqt5svg5-dev && \
-    cd DesktopEditors && \
     cd desktop-apps/win-linux && \
     qmake ASCDocumentEditor.pro
